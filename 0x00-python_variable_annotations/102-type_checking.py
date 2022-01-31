@@ -5,6 +5,7 @@ import typing
 
 
 def zoom_array(lst: typing.Tuple, factor: int = 2) -> typing.List:
+    """zoom array"""
     zoomed_in: typing.List[typing.Any] = [
         item for item in lst
         for i in range(factor)
