@@ -15,4 +15,5 @@ async def wait_n(n: int, max_delay: int) -> typing.List[float]:
     results: typing.List[float] = []
     for delay in range(n):
         results.append(asyncio.create_task(wait_random(max_delay)))
-    return await asyncio.gather(*results)
+    response = await asyncio.gather(*results)
+    return sorted(response)
