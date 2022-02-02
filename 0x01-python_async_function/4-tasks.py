@@ -16,4 +16,3 @@ async def task_wait_n(n: int, max_delay: int) -> typing.List[float]:
         results.append(wait_random(max_delay))
     response = await asyncio.gather(*results)
     return sorted(response)
-    
