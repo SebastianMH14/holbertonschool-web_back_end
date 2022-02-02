@@ -13,6 +13,7 @@ async def task_wait_n(n: int, max_delay: int) -> typing.List[float]:
     """return the list of all the delays (float values)."""
     results: typing.List[float] = []
     for delay in range(n):
-       results.append(await asyncio.gather(wait_random(max_delay)))
-    # response = await asyncio.gather(*results)
-    return sorted(results)
+        results.append(wait_random(max_delay))
+    response = await asyncio.gather(*results)
+    return sorted(response)
+    
