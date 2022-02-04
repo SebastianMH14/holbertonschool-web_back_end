@@ -20,6 +20,7 @@ class LRUCache(BaseCaching):
                 self.cache_data.popitem(last=False)
                 print("DISCARD: {}".format(key))
             self.cache_data.update({key: item})
+            self.cache_data.move_to_end(key)
 
     def get(self, key):
         """return the value in self.cache_data linked to key."""
