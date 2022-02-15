@@ -5,12 +5,12 @@ from typing import List, TypeVar
 
 
 class Auth:
+    """Auth class for authentication"""
 
     def __init__(self):
         """constructor"""
         pass
 
-    @classmethod
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """Returns True if the path is not in the list of strings excluded_paths"""
         if path is None or excluded_paths is None or len(excluded_paths) == 0:
@@ -22,7 +22,6 @@ class Auth:
                 else:
                     return True
 
-    @classmethod
     def authorization_header(self, request=None) -> str:
         """If request doesn't contain the header key Authorization,
         returns None; Otherwise, return the value of the 
@@ -36,7 +35,6 @@ class Auth:
             else:
                 return header_auth
 
-    @classmethod
     def current_user(self, request=None) -> TypeVar('User'):
         """request will be the Flask request object"""
         return None
