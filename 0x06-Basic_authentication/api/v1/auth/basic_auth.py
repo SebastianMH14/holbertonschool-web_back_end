@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """class BasicAuth that inherits from Auth"""
 from api.v1.auth.auth import Auth
+from base64 import b64decode
 
 
 class BasicAuth(Auth):
@@ -16,3 +17,16 @@ class BasicAuth(Auth):
             return None
         else:
             return authorization_header.lstrip('Basic ')
+
+    def decode_base64_authorization_header(
+            self, base64_authorization_header: str) -> str:
+        """returns the decoded value of a Base64 string"""
+        if base64_authorization_header is None or type(
+                base64_authorization_header) is not str:
+            return None
+        else:
+            try:
+                decoded = b64decode(base64_authorization_header)
+                return decoded.decode('utf-8')
+            except Exception as e:
+                return None
