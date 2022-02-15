@@ -10,14 +10,14 @@ class Auth:
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """Returns True if the path is not in the
         list of strings excluded_paths"""
+        true_or_false = True
         if path is None or excluded_paths is None or len(excluded_paths) == 0:
-            return True
+            return true_or_false
         else:
             for paths in excluded_paths:
                 if paths.replace('/', '') == path.replace('/', ''):
-                    return False
-                else:
-                    return True
+                    true_or_false = False
+        return true_or_false
 
     def authorization_header(self, request=None) -> str:
         """If request doesn't contain the header key Authorization,
