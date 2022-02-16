@@ -43,7 +43,7 @@ class BasicAuth(Auth):
                 ':') == -1:
             return (None, None)
         else:
-            value = decoded_base64_authorization_header.split(':')
+            value = decoded_base64_authorization_header.split(':', 1)
             return (value[0], value[1])
 
     def user_object_from_credentials(
