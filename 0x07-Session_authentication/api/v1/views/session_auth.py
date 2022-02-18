@@ -11,9 +11,9 @@ def login():
     """etrieve the User instance based on the email"""
     email = request.form.get('email')
     password = request.form.get('password')
-    if email is None or email is False:
+    if email is None or email == "":
         return jsonify({"error": "email missing"}), 400
-    if password is None or password is False:
+    if password is None or password == "":
         return jsonify({"error": "password missing"}), 400
 
     search = User.search({'email': email})
