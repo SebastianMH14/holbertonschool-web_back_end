@@ -4,11 +4,12 @@ from api.v1.views import app_views
 from flask import abort, jsonify, request, session
 from models.user import User
 import os
+from api.v1.app import auth
 
 
 @app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
 def login():
-    """etrieve the User instance based on the email"""
+    """retrieve the User instance based on the email"""
     email = request.form.get('email')
     password = request.form.get('password')
     if email is None or email is False:
@@ -28,3 +29,13 @@ def login():
     out = jsonify(search[0].to_json())
     out.set_cookie(os.getenv('SESSION_NAME'), session_id)
     return out
+
+
+@app_views.route('/auth_session/logout',
+                 methods=['DELETE'], strict_slashes=False)
+def logout():
+    """deletes the user session / logout"""
+    if auth.destroy_session(request) is False:
+        abort(404)
+    else:
+        return jsonify({}), 200
