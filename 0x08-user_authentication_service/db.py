@@ -36,9 +36,7 @@ class DB:
         """two required string arguments:
         email and hashed_password,
         and returns a User object"""
-        new_user = User()
-        new_user.email = email
-        new_user.hashed_password = hashed_password
+        new_user = User(email=email, hashed_password=hashed_password)
         self._session.add(new_user)
         self._session.commit()
         return new_user
