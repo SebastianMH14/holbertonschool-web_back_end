@@ -49,7 +49,7 @@ class DB:
         users table as filtered by the method's input arguments"""
         if kwargs is None:
             raise InvalidRequestError
-        our_user = self._session.query(User).filter_by(**kwargs).first()
-        if our_user is None:
+        user_found = self._session.query(User).filter_by(**kwargs).first()
+        if user_found is None:
             raise NoResultFound
-        return our_user
+        return user_found
