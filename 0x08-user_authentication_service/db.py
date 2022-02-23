@@ -49,10 +49,9 @@ class DB:
         and returns the first row found in the
         users table as filtered by the method's input arguments"""
         try:
-            our_user = self._session.query(User).filter_by(
-                email=kwargs.get('email')).first()
+            our_user = self._session.query(User).filter_by(**kwargs).first()
         except:
-            InvalidRequestError
+            raise InvalidRequestError
         if our_user is None:
             raise NoResultFound
         return our_user
