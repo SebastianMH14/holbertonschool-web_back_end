@@ -50,7 +50,7 @@ class DB:
         users table as filtered by the method's input arguments"""
         try:
             our_user = self._session.query(User).filter_by(**kwargs).first()
-        except:
+        except Exception as e:
             raise InvalidRequestError
         if our_user is None:
             raise NoResultFound
