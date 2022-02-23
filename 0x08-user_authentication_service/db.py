@@ -8,7 +8,6 @@ from sqlalchemy.orm.session import Session
 from typing import TypeVar
 from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.orm.exc import NoResultFound
-
 from user import Base, User
 
 
@@ -44,7 +43,7 @@ class DB:
         self._session.commit()
         return new_user
 
-    def find_user_by(self, **kwargs) -> TypeVar('User'):
+    def find_user_by(self, **kwargs) -> User:
         """ takes in arbitrary keyword arguments
         and returns the first row found in the
         users table as filtered by the method's input arguments"""
