@@ -6,6 +6,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 from typing import TypeVar
+from sqlalchemy.exc import InvalidRequestError
+from sqlalchemy.orm.exc import NoResultFound
 
 from user import Base, User
 
@@ -43,16 +45,14 @@ class DB:
         return new_user
 
     def find_user_by(self, **kwargs):
-        query = "SELECT * FROM users"
-        i = 0
-        for key, value in kwargs.items():
-            if i == 0:
-                query += " WHERE "
-            else:
-                query += " AND "
-            query += "{}='{}'".format(key, value)
-            i += 1
-        query += ";"
-        users = self._session.query(User).from_statement(
-            text(query))
-        return users[0]
+        """ takes in arbitrary keyword arguments
+        and returns the first row found in the
+        users table as filtered by the method's input arguments"""
+        try:
+            our_user = self._session.query(User).filter_by(
+                email=kwargs.get('email')).first()
+        except:
+            InvalidRequestError
+        if our_user is None:
+            raise NoResultFound
+        return our_user
