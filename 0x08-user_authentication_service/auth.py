@@ -23,6 +23,18 @@ class Auth:
             hash_pwd = _hash_password(password)
             return self._db.add_user(email, hash_pwd)
 
+    def valid_login(self, email: str, password: str) -> bool:
+        """If it matches return True.
+        In any other case, return False."""
+        try:
+            found_user = self._db.find_user_by(email=email)
+            if bcrypt.checkpw(password.encode('utf8'), found_user.hashed_password):
+                return True
+            else:
+                return False
+        except:
+            return False
+
 
 def _hash_password(password: str) -> bytes:
     """returned bytes is a salted hash of the input password"""
