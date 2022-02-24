@@ -28,11 +28,12 @@ class Auth:
         In any other case, return False."""
         try:
             found_user = self._db.find_user_by(email=email)
-            if bcrypt.checkpw(password.encode('utf8'), found_user.hashed_password):
+            if bcrypt.checkpw(password.encode('utf8'),
+                              found_user.hashed_password):
                 return True
             else:
                 return False
-        except:
+        except NoResultFound:
             return False
 
 
