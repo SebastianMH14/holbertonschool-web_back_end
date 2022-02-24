@@ -21,10 +21,11 @@ class RedactingFormatter(logging.Formatter):
         NotImplementedError
 
 
-
-def filter_datum(fields: List[str], redaction: str, message: str, separator: str) -> str:
-    """ use a regex to replace occurrences of certain field values
-    use re.sub to perform the substitution with a single regex."""
+def filter_datum(fields: List[str],
+                 redaction: str, message: str, separator: str) -> str:
+    """ use a regex to replace occurrences of certain
+    field values use re.sub to perform the substitution
+    with a single regex."""
     for field in fields:
         message = re.sub(r'({}=).*?{}'.format(field, separator),
                          r'\1{}{}'.format(redaction, separator), message)
