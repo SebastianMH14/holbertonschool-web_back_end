@@ -37,6 +37,18 @@ class Auth:
         except NoResultFound:
             return False
 
+    def create_session(self, email: str) -> str:
+        """ It takes an email string argument
+        and returns the session ID as a string"""
+        try:
+            user = self._db.find_user_by(email=email)
+            session_id = _generate_uuid()
+            user.session_id = session_id
+            self._db._session.commit()
+            return session_id
+        except NoResultFound:
+            return None
+
 
 def _hash_password(password: str) -> bytes:
     """returned bytes is a salted hash of the input password"""
