@@ -55,7 +55,7 @@ class DB:
         """
         user = self.find_user_by(id=user_id)
         for key, value in kwargs.items():
-            if key == user.__dict__.keys():
+            if key != user.__dict__.keys():
                 raise ValueError
             else:
                 setattr(user, key, value)
