@@ -49,3 +49,14 @@ class DB:
         if user_found is None:
             raise NoResultFound
         return user_found
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """The method will use find_user_by
+        """
+        user = self.find_user_by(id=user_id)
+        for key, value in kwargs.items():
+            if key == user.__dict__.keys():
+                raise ValueError
+            else:
+                setattr(user, key, value)
+        return None
