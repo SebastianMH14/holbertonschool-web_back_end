@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""unitest for module client"""
+"""unitest for module client
+"""
 
 import unittest
 from unittest.mock import patch, PropertyMock
@@ -8,7 +9,8 @@ from parameterized import parameterized
 
 
 class TestGithubOrgClient(unittest.TestCase):
-    """class to test GithubOrgClient"""
+    """class to test GithubOrgClient
+    """
 
     @parameterized.expand([
         ("google"),
@@ -16,7 +18,8 @@ class TestGithubOrgClient(unittest.TestCase):
     ])
     @patch("client.get_json")
     def test_org(self, org, get_patch):
-        """test correct org"""
+        """test correct org
+        """
         test = GithubOrgClient(org)
         test.org
         get_patch.assert_called_once_with(
