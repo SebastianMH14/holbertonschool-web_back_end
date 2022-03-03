@@ -7,17 +7,17 @@ from client import GithubOrgClient
 
 
 class test_public_repos_url(unittest.TestCase):
-    """
-    method to unit-test GithubOrgClient._public_repos_url
-    """
+    """test to GithubOrgClient._public_repos_url"""
     @parameterized.expand([
-        ("google", {"google": True}),
-        ("abc", {"abc": True})
+        ('google'),
+        ('abc')
     ])
-    @patch('client.get_json')
-    def test_org(self, org, result, patch_data):
-        """ Test the org of the client """
-        patch_data.return_value = result
-        x = GithubOrgClient(org)
-        self.assertEqual(x.org, result)
-        patch_data.assert_called_once_with("https://api.github.com/orgs/"+org)
+    @patch("client.get_json", return_value={"payload": True})
+    def test_org(self, org, get_patch):
+        """Method that tests that GithubOrgClient.org returns the
+        correct value
+        """
+        test_client = GithubOrgClient(org)
+        test_return = test_client.org
+        self.assertEqual(test_return, get_patch.return_value)
+        get_patch.assert_called_once
