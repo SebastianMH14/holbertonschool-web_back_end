@@ -1,24 +1,32 @@
 #!/usr/bin/env python3
-"""test for client"""
-from parameterized import parameterized
+"""unitest for module client"""
+
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch, PropertyMock
 from client import GithubOrgClient
+from parameterized import parameterized
 
 
-class test_public_repos_url(unittest.TestCase):
-    """test to GithubOrgClient._public_repos_url"""
+class TestGithubOrgClient(unittest.TestCase):
+    """class to test GithubOrgClient"""
 
     @parameterized.expand([
-        ('google'),
-        ('abc')
+        ("google"),
+        ("abc")
     ])
     @patch("client.get_json")
     def test_org(self, org, get_patch):
-        """Method that tests that GithubOrgClient.org returns the
-        correct value
-        """
-        test_client = GithubOrgClient(org)
-        test_client.org
+        """test correct org"""
+        test = GithubOrgClient(org)
+        test.org
         get_patch.assert_called_once_with(
             GithubOrgClient.ORG_URL.format(org=org))
+
+    def test_public_repos_url(self):
+        """testing for public_repos_url
+        """
+        with patch.object(
+                GithubOrgClient, "org", new_callable=PropertyMock)as mock_get:
+            mock_get.return_value = {"repos_url": "url_for_mock"}
+            test = GithubOrgClient("path")
+            self.assertEqual(test._public_repos_url, "url_for_mock")
