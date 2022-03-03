@@ -73,14 +73,3 @@ class TestGithubOrgClient(unittest.TestCase):
         """
         ret = GithubOrgClient.has_license(repo, license_key)
         self.assertEqual(ret, expected)
-
-    def test_public_repos_with_license(self):
-        """ public repos test """
-        y = GithubOrgClient("x")
-        self.assertEqual(y.org, self.org_payload)
-        self.assertEqual(y.repos_payload, self.repos_payload)
-        self.assertEqual(y.public_repos(), self.expected_repos)
-        self.assertEqual(y.public_repos("NONEXISTENT"), [])
-        self.assertEqual(y.public_repos("apache-2.0"), self.apache2_repos)
-        self.get.assert_has_calls([call("https://api.github.com/orgs/x"),
-                                   call(self.org_payload["repos_url"])])
