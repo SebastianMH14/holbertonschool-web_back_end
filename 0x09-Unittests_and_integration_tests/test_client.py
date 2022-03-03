@@ -8,16 +8,17 @@ from client import GithubOrgClient
 
 class test_public_repos_url(unittest.TestCase):
     """test to GithubOrgClient._public_repos_url"""
+
     @parameterized.expand([
         ('google'),
         ('abc')
     ])
-    @patch("client.get_json", return_value={"payload": True})
+    @patch("client.get_json")
     def test_org(self, org, get_patch):
         """Method that tests that GithubOrgClient.org returns the
         correct value
         """
         test_client = GithubOrgClient(org)
-        test_return = test_client.org
-        self.assertEqual(test_return, get_patch.return_value)
-        get_patch.assert_called_once
+        test_client.org
+        get_patch.assert_called_once_with(
+            GithubOrgClient.ORG_URL.format(org=org))
