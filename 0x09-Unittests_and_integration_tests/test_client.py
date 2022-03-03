@@ -17,13 +17,13 @@ class TestGithubOrgClient(unittest.TestCase):
         ("abc")
     ])
     @patch("client.get_json")
-    def test_org(self, org, get_patch):
+    def test_org(self, org_values, get_patch):
         """test correct org
         """
-        test = GithubOrgClient(org)
+        test = GithubOrgClient(org_values)
         test.org
         get_patch.assert_called_once_with(
-            GithubOrgClient.ORG_URL.format(org=org))
+            GithubOrgClient.ORG_URL.format(org=org_values))
 
     def test_public_repos_url(self):
         """testing for public_repos_url
