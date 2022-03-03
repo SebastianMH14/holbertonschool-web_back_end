@@ -2,7 +2,7 @@
 """test for client"""
 from parameterized import parameterized
 import unittest
-from unittest.mock import patch, Mock
+from unittest.mock import patch
 from client import GithubOrgClient
 
 
