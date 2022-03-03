@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""unitest for module client
+"""Testing the client module
 """
 
 import unittest
@@ -9,7 +9,7 @@ from parameterized import parameterized
 
 
 class TestGithubOrgClient(unittest.TestCase):
-    """class to test GithubOrgClient
+    """class to rest the github class
     """
 
     @parameterized.expand([
@@ -17,13 +17,13 @@ class TestGithubOrgClient(unittest.TestCase):
         ("abc")
     ])
     @patch("client.get_json")
-    def test_org(self, org_values, get_patch):
-        """test correct org
+    def test_org(self, values, mock_json):
+        """test the correct org
         """
-        test = GithubOrgClient(org_values)
+        test = GithubOrgClient(values)
         test.org
-        get_patch.assert_called_once_with(
-            GithubOrgClient.ORG_URL.format(org=org_values))
+        mock_json.assert_called_once_with(
+            GithubOrgClient.ORG_URL.format(org=values))
 
     def test_public_repos_url(self):
         """testing for public_repos_url
