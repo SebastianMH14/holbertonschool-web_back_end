@@ -1,38 +1,50 @@
 #!/usr/bin/env python3
-"""unitest for module client
+""" Parameterize and patch as decorators
+    his method should test that GithubOrgClient.org
+    returns the correct value.
 """
-
 import unittest
-from unittest.mock import patch, PropertyMock, call
-from client import GithubOrgClient
+from unittest.mock import patch, PropertyMock
 from parameterized import parameterized
+from client import GithubOrgClient
 
 
 class TestGithubOrgClient(unittest.TestCase):
-    """class to test GithubOrgClient
+    """ Test a resources without external called
+    Args:
+        unittest ([type]): [description]
     """
-
     @parameterized.expand([
-        ("google"),
-        ("abc")
+        ('google'),
+        ('abc'),
     ])
-    @patch("client.get_json")
-    def test_org(self, org_values, get_patch):
-        """test correct org
+    @patch('requests.get')
+    def test_org(self, param, mock_get):
+        """ mock request HTTP without external called
+        Args:
+            param ([type]): [description]
+            mock_get ([type]): [description]
         """
-        test = GithubOrgClient(org_values)
-        test.org
-        get_patch.assert_called_once_with(
-            GithubOrgClient.ORG_URL.format(org=org_values))
+        json_test = {
+            'type': 'OK'
+        }
+        mock_get.return_value.json.return_value = json_test
+        response = GithubOrgClient(param)
+        response.org
+        mock_get.assert_called_once()
 
     def test_public_repos_url(self):
-        """testing for public_repos_url
+        """ test a private method to filter data from json
         """
-        with patch.object(
-                GithubOrgClient, "org", new_callable=PropertyMock)as mock_get:
-            mock_get.return_value = {"repos_url": "url_for_mock"}
-            test = GithubOrgClient("path")
-            self.assertEqual(test._public_repos_url, "url_for_mock")
+        with patch.object(GithubOrgClient, 'org', new_callable=PropertyMock) \
+                as mock_org:
+            mock_org.return_value = {
+                'unknown': 'Ok',
+                'repos_url': 'http://'
+            }
+            my_instance = GithubOrgClient('org')
+            value = my_instance.org
+            self.assertEqual(my_instance._public_repos_url, value['repos_url'])
 
     @patch.object(GithubOrgClient, 'org')
     def test_public_repos(self, mock_org):
