@@ -35,9 +35,9 @@ def get_locale():
     """determine the best match with our supported languages."""
     args = request.args.get('locale')
     if args is not None:
-        if args['locale'] == 'en':
+        if args == 'en':
             return 'en'
-        elif args['locale'] == 'fr':
+        elif args == 'fr':
             return 'fr'
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
