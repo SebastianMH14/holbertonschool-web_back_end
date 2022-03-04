@@ -44,18 +44,18 @@ def get_locale():
 
 def get_user():
     """user login"""
-    user = request.args.get('login_as')
-    if user is None:
+    id_loggin = request.args.get('login_as')
+    if id_loggin is None:
         return None
     else:
-        return users.get(int(user))
+        return users.get(int(id_loggin))
 
 
 @app.before_request
 def before_request():
     """excuted before_request"""
-    user = get_user()
-    g.user = user
+    user_loged = get_user()
+    g.user = user_loged
 
 
 if __name__ == "__main__":
