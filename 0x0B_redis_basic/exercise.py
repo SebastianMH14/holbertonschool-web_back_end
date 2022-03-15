@@ -21,20 +21,5 @@ class Cache:
         """store the input data in Redis
         using the random key and return the key"""
         key = str(uuid.uuid4())
-        self._redis.mset({key: data})
+        self._redis.set(key, data)
         return key
-
-    def get(self, key: str, fn: Callable[[]]):
-        """convert the data back to the desired format"""
-        result = self._redis.get(key)
-        if fn:
-            return fn(result)
-        return result
-
-    def get_str(self, str_utf8: str) -> str:
-        """convert utf8 to string"""
-        return str(str_utf8.decode('utf8'))
-
-    def get_int(self, int_utf8: str) -> int:
-        """convert utf8 to int"""
-        return int(int_utf8.decode('utf8'))
