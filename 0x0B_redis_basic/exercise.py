@@ -23,3 +23,18 @@ class Cache:
         key = str(uuid.uuid4())
         self._redis.set(key, data)
         return key
+
+    def get(self, key: str, fn):
+        """convert the data back to the desired format"""
+        result = self._redis.get(key)
+        if result:
+            fn.g
+        return result
+
+    def get_str(self, str_utf8: str) -> str:
+        """convert utf8 to string"""
+        return str(str_utf8.decode('utf8'))
+
+    def get_int(self, int_utf8) -> int:
+        """convert utf8 to int"""
+        return int(int_utf8.decode('utf8'))
