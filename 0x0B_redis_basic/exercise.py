@@ -28,7 +28,7 @@ class Cache:
         """convert the data back to the desired format"""
         result = self._redis.get(key)
         if result:
-            fn(result)
+            return fn(result)
         return result
 
     def get_str(self, str_utf8: str) -> str:
