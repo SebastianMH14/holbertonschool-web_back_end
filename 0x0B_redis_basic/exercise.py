@@ -24,11 +24,11 @@ class Cache:
         self._redis.set(key, data)
         return key
 
-    def get(self, key: str, fn):
+    def get(self, key: str, fn: Callable = None) -> Union[str, bytes, int, float]:
         """convert the data back to the desired format"""
         result = self._redis.get(key)
         if result:
-            fn.g
+            fn(result)
         return result
 
     def get_str(self, str_utf8: str) -> str:
