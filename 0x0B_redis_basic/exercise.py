@@ -27,7 +27,7 @@ class Cache:
     def get(self, key: str, fn: Callable = None) -> Union[str, bytes, int, float]:
         """convert the data back to the desired format"""
         result = self._redis.get(key)
-        if result:
+        if fn:
             return fn(result)
         return result
 
