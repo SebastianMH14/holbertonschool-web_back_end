@@ -31,10 +31,10 @@ class Cache:
             return fn(result)
         return result
 
-    def get_str(self, str_utf8: str) -> str:
+    def get_str(self, key: str) -> str:
         """convert utf8 to string"""
-        return str(str_utf8.decode('utf8'))
+        return str(self._redis.get(key).decode("utf-8"))
 
-    def get_int(self, int_utf8) -> int:
+    def get_int(self, key: str) -> int:
         """convert utf8 to int"""
-        return int(int_utf8.decode('utf8'))
+        return int(self._redis.get(key).decode('utf8'))
