@@ -1,5 +1,5 @@
 -- script that creates a trigger that decreases the quantity of an item after adding a new order
-CREATE TRIGGER deduct_item BEFORE
+CREATE TRIGGER deduct_item AFTER
 INSERT
   ON orders
 UPDATE
