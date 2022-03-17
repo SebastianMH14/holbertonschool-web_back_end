@@ -1,7 +1,8 @@
 -- script that creates a trigger that decreases the quantity of an item after adding a new order
-CREATE TRIGGER deduct_item AFTER
+CREATE TRIGGER deduct_item
+AFTER
 INSERT
-  ON orders
+  ON orders FOR EACH ROW
 UPDATE
   items
 SET
