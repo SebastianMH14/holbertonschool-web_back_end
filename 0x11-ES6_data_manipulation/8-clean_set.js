@@ -1,6 +1,6 @@
 export default function cleanSet(set, startString) {
   const arrayToStr = [];
-  if (startString.length > 0) {
+  if (startString) {
     for (const value of set) {
       if (value.startsWith(startString)) {
         arrayToStr.push(value.slice(startString.length));
