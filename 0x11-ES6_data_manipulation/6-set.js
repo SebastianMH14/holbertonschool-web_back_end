@@ -1,7 +1,7 @@
-export default function setFromArray(Array) {
-  if (!Array.isArray(Array)) {
+export default function setFromArray(array) {
+  if (!Array.isArray(array)) {
     return 0;
   }
-  const set = new Set(Array);
+  const set = new Set(array);
   return set;
 }
