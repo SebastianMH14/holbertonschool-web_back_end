@@ -6,7 +6,6 @@ export default function cleanSet(set, startString) {
         arrayToStr.push(value.slice(startString.length));
       }
     }
-    return arrayToStr.join('-');
   }
-  return '\n';
+  return arrayToStr.join('-');
 }
