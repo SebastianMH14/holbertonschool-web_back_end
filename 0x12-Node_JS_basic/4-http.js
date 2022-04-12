@@ -11,3 +11,5 @@ const server = app.createServer(helloWorld);
 server.listen(port, () => {
   console.log(`Server running at http://localhost:${port}/`);
 });
+
+module.exports = app;
