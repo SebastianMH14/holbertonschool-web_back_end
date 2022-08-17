@@ -1,18 +1,19 @@
 #!/usr/bin/env python3
-"""ask_wait_n. The code is nearly
-identical to wait_n except task_wait_random
-is being called."""
-import asyncio
-import typing
+'''execute multiple coroutines at the same time with async'''
 
-wait_random = __import__('0-basic_async_syntax').wait_random
+import asyncio
+from typing import List
 task_wait_random = __import__('3-tasks').task_wait_random
 
 
-async def task_wait_n(n: int, max_delay: int) -> typing.List[float]:
-    """return the list of all the delays (float values)."""
-    results: typing.List[float] = []
-    for delay in range(n):
-        results.append(wait_random(max_delay))
-    response = await asyncio.gather(*results)
-    return sorted(response)
+async def task_wait_n(n: int, max_delay: int = 10) -> List[float]:
+    ''' Async function that calls task_wait_random n number of times'''
+    delays: List = []
+    for i in range(n):
+        delay = task_wait_random(max_delay)
+        delays.append(delay)
+    res_list: List = []
+    for task in asyncio.as_completed(delays):
+        res: float = await task
+        res_list.append(res)
+    return res_list
