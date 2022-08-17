@@ -1,34 +1,17 @@
 #!/usr/bin/env python3
-""" Tasks """
-
-from typing import List
+"""Async basics in Python task 1"""
 import asyncio
-import random
+from typing import List
+
+wait_random = __import__('0-basic_async_syntax').wait_random
 task_wait_random = __import__('3-tasks').task_wait_random
 
 
-async def task_wait_n(n: int, max_delay: int = 10) -> List[float]:
-    """ execute task_wait_random from 3-tasks.py file
-    n times with the specified max_delay
-    Parameters
-    ----------
-    n : int
-      number of times to execute wait_random
-    max_delay : int
-        maximum delay
-    Returns
-    -------
-    list
-        list of all the delays returned from task_wait_random
-    """
-    spawn_list = []
-    delay_list = []
-    for i in range(n):
-        delayed_task = task_wait_random(max_delay)
-        delayed_task.add_done_callback(lambda x: delay_list.append(x.result()))
-        spawn_list.append(delayed_task)
+async def task_wait_n(n: int, max_delay: int) -> List[float]:
+    """Returns a list of delayed float values using wait_random coroutine"""
+    tasks = []
 
-    for spawn in spawn_list:
-        await spawn
+    for _ in range(n):
+        tasks.append(task_wait_random(max_delay))
 
-    return delay_list
+    return [await t for t in asyncio.as_completed(tasks)]
