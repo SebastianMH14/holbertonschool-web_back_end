@@ -1,11 +1,8 @@
-export default function cleanSet(set, startString = '') {
-  const array = [];
-  if (startString.length === 0 || typeof startString !== 'string') return '';
-  set.forEach((element) => {
-    if (element.startsWith(startString)) {
-      array.push(element.slice(startString.length));
-    }
+export default function cleanSet(set, startString) {
+  let result = '';
+  if (!startString || !startString.length) return result;
+  set.forEach((i) => {
+    if (i && i.startsWith(startString)) result += `${i.slice(startString.length)}-`;
   });
-  set.clear();
-  return array.join('-');
+  return result.slice(0, result.length - 1);
 }
